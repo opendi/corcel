@@ -17,6 +17,7 @@ use Illuminate\Contracts\Auth\CanResetPassword;
  * @author Ashwin Sureshkumar <ashwin.sureshkumar@gmail.com>
  * @author Mickael Burguet <www.rundef.com>
  * @author Junior Grossi <juniorgro@gmail.com>
+ * @author Michel Feldheim <m.feldheim@opendi.com>
  */
 class User extends Model implements Authenticatable, CanResetPassword
 {
@@ -135,7 +136,9 @@ class User extends Model implements Authenticatable, CanResetPassword
      */
     public function getAuthPassword()
     {
-        return $this->user_pass;
+        $authPasswordName = $this->getAuthPasswordName();
+        
+        return $this->{$authPasswordName};
     }
 
     /**
@@ -170,6 +173,16 @@ class User extends Model implements Authenticatable, CanResetPassword
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+
+    /**
+     * Get the name of the password attribute for the user.
+     *
+     * @return string
+     */
+    public function getAuthPasswordName()
+    {
+        return 'user_pass';
     }
 
     /**
